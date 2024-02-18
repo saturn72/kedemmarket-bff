@@ -3,11 +3,10 @@ import { FirebaseService } from 'src/core/firebase.service';
 
 @Injectable()
 export class CatalogService {
-
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private firebaseService: FirebaseService) {}
 
   async findAll(): Promise<any> {
-    return await this.firebaseService.loadFromStorage("/catalog/index.json");
+    return await this.firebaseService.loadFromStorage('/catalog/index.json');
   }
 
   findOne(id: string) {

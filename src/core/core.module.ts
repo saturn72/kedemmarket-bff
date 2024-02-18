@@ -5,16 +5,8 @@ import { HttpModule } from '@nestjs/axios';
 
 @Global()
 @Module({
-  providers: [
-    FirebaseService,
-    AppCheckGuard
-  ],
-  imports: [
-    HttpModule
-  ],
-  exports: [
-    FirebaseService,
-    AppCheckGuard
-  ]
+  providers: [FirebaseService, AppCheckGuard],
+  imports: [HttpModule],
+  exports: [FirebaseService, AppCheckGuard],
 })
-export class CoreModule { }
+export class CoreModule {}
