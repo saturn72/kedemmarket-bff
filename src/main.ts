@@ -13,7 +13,7 @@ let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });
 let allowedOrigins: string[];
 
-fastify.register(fastifyCors, (instance) => {
+fastify.register(fastifyCors, () => {
   return (req, callback) => {
     allowedOrigins ??= app
       .get(ConfigService)

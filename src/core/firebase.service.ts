@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError, AxiosResponse } from 'axios';
-import { App, AppOptions, initializeApp } from 'firebase-admin/app';
+import { AppOptions, initializeApp } from 'firebase-admin/app';
 import { AppCheck, getAppCheck } from 'firebase-admin/app-check';
 import { getStorage, getDownloadURL } from 'firebase-admin/storage';
 import { catchError, firstValueFrom } from 'rxjs';
