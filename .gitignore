@@ -107,6 +107,7 @@ dist
 # Docusaurus cache and generated files
 .docusaurus
 
+<<<<<<< HEAD
 # Serverless directories
 .serverless/
 
@@ -128,3 +129,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+=======
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+#do not push cinfg files
+config/
+.env
+.env.*
+>>>>>>> 7a1c4cd (update ignore file)
