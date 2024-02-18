@@ -1,0 +1,19 @@
+import { Module } from '@nestjs/common';
+import { CatalogModule } from './catalog/catalog.module';
+import { ConfigModule } from '@nestjs/config';
+import { CoreModule } from './core/core.module';
+import corsConfig from "@config/cors";
+import firebaseConfig from '@config/firebase';
+
+@Module({
+  imports: [
+    CatalogModule,
+    ConfigModule.forRoot({
+      load: [corsConfig, firebaseConfig],
+      isGlobal: true,
+    }),
+    CoreModule
+  ],
+
+})
+export class AppModule { }
