@@ -33,6 +33,8 @@ async function bootstrap() {
   const appCheckGuard = app.get(AppCheckGuard);
   app.useGlobalGuards(appCheckGuard);
 
-  await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
+  const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+  console.log("KEDEMMARKET-BFF application starts on port:", port);
+  await app.listen(port);
 }
 bootstrap();
