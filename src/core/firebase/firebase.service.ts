@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError, AxiosResponse } from 'axios';
+import { getFirestore } from 'firebase-admin/firestore';
 import { AppOptions, initializeApp } from 'firebase-admin/app';
 import { AppCheck, getAppCheck } from 'firebase-admin/app-check';
 import { getStorage, getDownloadURL } from 'firebase-admin/storage';
@@ -25,6 +26,16 @@ export class FirebaseService {
   async verifyAppCheckToken(token: any): Promise<boolean> {
     const claims = await this.appCheck.verifyToken(token);
     return claims && !claims.alreadyConsumed;
+  }
+
+  async getCatalog(): Promise<any> {
+    const collection = getFirestore().collection('catalog');
+    const docRef = collection.orderBy('version', 'desc').limitToLast(1);
+    const snapshot = await docRef.get();
+    if (snapshot.docs.length == 0) {
+      return {};
+    }
+    return snapshot.docs[0].data();
   }
 
   async loadFromStorage(path: string): Promise<AxiosResponse<any>> {
