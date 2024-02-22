@@ -8,19 +8,26 @@ import { AppModule } from './app.module';
 import { RawServerDefault } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AppCheckGuard } from './core/guards/app-check.guard';
+import { Logger } from '@nestjs/common';
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });
 let allowedOrigins: string[];
 
 fastify.register(fastifyCors, () => {
+
+  const logger = new Logger("fastify/cors");
   return (req, callback) => {
-    allowedOrigins ??= app
-      .get(ConfigService)
-      .get<Array<string>>('cors.origins');
+    if (!allowedOrigins || allowedOrigins == null || allowedOrigins.length == 0) {
+      allowedOrigins = app
+        .get(ConfigService)
+        .get<Array<string>>('cors.origins');
+      logger.log("Allowed origins: ", allowedOrigins);
+    }
+
     const corsOptions: { origin: boolean } = { origin: false };
 
-    if (allowedOrigins.some((o: string) => o.startsWith(req.headers.origin))) {
+    if (allowedOrigins.some((o: string) => req.headers.origin.startsWith(o))) {
       corsOptions.origin = true;
     }
     callback(null, corsOptions);
