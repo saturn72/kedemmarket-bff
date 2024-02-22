@@ -15,14 +15,17 @@ const fastify = new FastifyAdapter({ caseSensitive: false });
 let allowedOrigins: string[];
 
 fastify.register(fastifyCors, () => {
-
-  const logger = new Logger("fastify/cors");
+  const logger = new Logger('fastify/cors');
   return (req, callback) => {
-    if (!allowedOrigins || allowedOrigins == null || allowedOrigins.length == 0) {
+    if (
+      !allowedOrigins ||
+      allowedOrigins == null ||
+      allowedOrigins.length == 0
+    ) {
       allowedOrigins = app
         .get(ConfigService)
         .get<Array<string>>('cors.origins');
-      logger.log("Allowed origins: ", allowedOrigins);
+      logger.log('Allowed origins: ', allowedOrigins);
     }
 
     const corsOptions: { origin: boolean } = { origin: false };
