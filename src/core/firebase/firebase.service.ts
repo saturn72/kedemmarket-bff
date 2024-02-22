@@ -30,7 +30,7 @@ export class FirebaseService {
 
   async getCatalog(): Promise<any> {
     const collection = getFirestore().collection('catalog');
-    const docRef = collection.orderBy('version', 'desc').limitToLast(1);
+    const docRef = collection.orderBy('version', 'desc').limit(1);
     const snapshot = await docRef.get();
     if (snapshot.docs.length == 0) {
       return {};
