@@ -8,7 +8,7 @@ import firebaseConfig from '@config/firebase';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { SseCacheExclusionHttpInterceptor } from './core/interceptors/CacheExclusionHttpInterceptor';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { AdminModule } from './admin/admin.module';
+import { HooksModule } from './hooks/hooks.module';
 
 @Module({
   imports: [
@@ -22,13 +22,13 @@ import { AdminModule } from './admin/admin.module';
     }),
     CoreModule,
     EventEmitterModule.forRoot(),
-    AdminModule
+    HooksModule,
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: SseCacheExclusionHttpInterceptor,
-    }
-  ]
+    },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

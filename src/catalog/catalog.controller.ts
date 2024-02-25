@@ -4,7 +4,7 @@ import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('catalog')
 export class CatalogController {
-  constructor(private readonly catalogService: CatalogService) { }
+  constructor(private readonly catalogService: CatalogService) {}
 
   @CacheKey('catalog')
   @CacheTTL(60 * 5)

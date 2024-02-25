@@ -4,8 +4,6 @@ import { CatalogController } from './catalog.controller';
 
 @Module({
   controllers: [CatalogController],
-  providers: [
-    CatalogService
-  ],
+  providers: [CatalogService],
 })
-export class CatalogModule { }
+export class CatalogModule {}
