@@ -8,7 +8,8 @@ export class CatalogController {
 
   @CacheKey('catalog')
   @CacheTTL(60 * 5)
-  @Get() findAll() {
+  @Get()
+  findAll() {
     return this.catalogService.findAll();
   }
 }

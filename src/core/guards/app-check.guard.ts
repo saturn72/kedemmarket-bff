@@ -6,7 +6,7 @@ export class AppCheckGuard implements CanActivate {
   /**
    *
    */
-  constructor(private firebase: FirebaseService) {}
+  constructor(private firebase: FirebaseService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
@@ -23,6 +23,7 @@ export class AppCheckGuard implements CanActivate {
     }
 
     const act = req.headers[appCheckPropertyName];
-    return await this.firebase.verifyAppCheckToken(act);
+    const t = await this.firebase.verifyAppCheckToken(act);
+    return t;
   }
 }
