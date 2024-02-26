@@ -9,7 +9,6 @@ import { RawServerDefault } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
-import { SocketIoAdapter } from './core/adapters/socketio.adapter';
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });

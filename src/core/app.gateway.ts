@@ -6,7 +6,7 @@ import { EmitService } from './services/emit.service';
   cors: true,
 })
 export class AppGateway {
-  constructor(private emitService: EmitService) { }
+  constructor(private emitService: EmitService) {}
 
   afterInit(server: Server) {
     this.emitService.server = server;
