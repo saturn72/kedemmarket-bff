@@ -48,7 +48,6 @@ async function bootstrap() {
   const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
   console.log('KEDEMMARKET-BFF application starts on port:', port);
 
-  // app.useWebSocketAdapter(new SocketIoAdapter(app));
   await app.listen(port);
 }
 

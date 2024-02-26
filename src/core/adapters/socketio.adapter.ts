@@ -15,11 +15,14 @@ export class SocketIoAdapter extends IoAdapter {
     const origin = this.app
       .get(ConfigService)
       .get<Array<string>>('cors.origins');
-    // const path = this.configService.get<string>('SOCKETIO.SERVER.PATH');
 
-    // const origin = origins.split(',');
-    // options.path = path;
-    options.cors = { origin };
+    options.cors = {
+      origin,
+      methods: ['GET', 'POST'],
+    };
+    options.path = '/notify/';
+    options.transports = ['polling', 'websocket'];
+
     const o = JSON.stringify(options);
     const msg = `Init websocket using \'socket.io\' with port: \'${port}\' and options: \'${o}\'`;
     console.log(msg);
