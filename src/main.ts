@@ -9,6 +9,7 @@ import { RawServerDefault } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
+import { SocketIoAdapter } from './core/adapters/socketio.adapter';
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });
@@ -47,6 +48,9 @@ async function bootstrap() {
   console.log(`KEDEMMARKET-BFF application starts using env.: ${env}`);
   const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
   console.log('KEDEMMARKET-BFF application starts on port:', port);
+
+  app.useWebSocketAdapter(new SocketIoAdapter(app));
   await app.listen(port);
 }
+
 bootstrap();
