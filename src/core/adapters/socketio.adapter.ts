@@ -20,8 +20,8 @@ export class SocketIoAdapter extends IoAdapter {
     // const origin = origins.split(',');
     // options.path = path;
     options.cors = { origin };
-
-    const msg = `Init websocket using \'socket.io\' with port: \'${port}\' and options: \'${options}\'`;
+    const o = JSON.stringify(options);
+    const msg = `Init websocket using \'socket.io\' with port: \'${port}\' and options: \'${o}\'`;
     console.log(msg);
 
     return super.createIOServer(port, options);

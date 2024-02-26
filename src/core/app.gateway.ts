@@ -3,12 +3,10 @@ import { Server } from 'socket.io';
 import { EmitService } from './services/emit.service';
 
 @WebSocketGateway({
-  cors: {
-    origin: '*',
-  },
+  cors: true,
 })
 export class AppGateway {
-  constructor(private emitService: EmitService) {}
+  constructor(private emitService: EmitService) { }
 
   afterInit(server: Server) {
     this.emitService.server = server;
