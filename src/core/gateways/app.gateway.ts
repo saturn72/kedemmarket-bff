@@ -8,9 +8,11 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from "@nestjs/websockets";
-
 import { Server } from "socket.io";
-@WebSocketGateway({ cors: { origins: ["http://localhost:3000"] }, path: '/notify' })
+
+
+const origins = ["https://kedemmarket.co.il", "https://www.kedemmarket.co.il", "http://localhost:3000",]
+@WebSocketGateway({ cors: { origins }, path: '/notify' })
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
 
   @WebSocketServer() io: Server;
