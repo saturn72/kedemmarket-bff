@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
 import { RawServerDefault } from 'fastify';
 import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
-import fastifySocketIO from "fastify-socket.io";
+import fastifySocketIO from 'fastify-socket.io';
 import { AppGateway } from './core/gateways/app.gateway';
 import { getOrigin } from './utils';
 
@@ -20,7 +20,6 @@ fastify.register(fastifyCors, () => {
   const allowedOrigins = getOrigin();
   logger.log('Allowed origins: ', allowedOrigins);
   return (req, callback) => {
-
     const corsOptions: { origin: boolean } = { origin: false };
     const origin: string = req.headers.origin;
 
@@ -31,9 +30,9 @@ fastify.register(fastifyCors, () => {
   };
 });
 
-
 const o = {
-  cors: { origin: getOrigin() }, path: '/notify'
+  cors: { origin: getOrigin() },
+  path: '/notify',
 };
 
 console.log(`socketio start with options: ${JSON.stringify(o)}`);
@@ -52,10 +51,10 @@ async function bootstrap() {
   console.log('KEDEMMARKET-BFF application starts on port:', port);
 
   await app.listen(port);
-  console.log("application started")
+  console.log('application started');
 
   const ag = app.get(AppGateway);
-  setInterval(() => ag.sendMessage({ key: "catalog:updated" }), 1000);
+  setInterval(() => ag.sendMessage({ key: 'catalog:updated' }), 1000);
 }
 
 bootstrap();

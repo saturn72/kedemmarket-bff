@@ -33,4 +33,4 @@ import { AppGateway } from './core/gateways/app.gateway';
     AppGateway,
   ],
 })
-export class AppModule { }
+export class AppModule {}

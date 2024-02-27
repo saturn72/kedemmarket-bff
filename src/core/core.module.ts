@@ -11,4 +11,4 @@ import { AppGateway } from './gateways/app.gateway';
   imports: [HttpModule],
   exports: [AppCheckGuard, EmitService, FirebaseService],
 })
-export class CoreModule { }
+export class CoreModule {}

@@ -1,34 +1,33 @@
-
-import { Logger } from "@nestjs/common";
+import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
-  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-} from "@nestjs/websockets";
-import { Server } from "socket.io";
-import { getOrigin } from "../../utils";
+} from '@nestjs/websockets';
+import { Server } from 'socket.io';
+import { getOrigin } from '../../utils';
 
 const wsoptions = {
   cors: {
-    origins: getOrigin()
+    origins: getOrigin(),
   },
-  path: '/notify'
+  path: '/notify',
 };
 
 @WebSocketGateway(wsoptions)
-export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-
+export class AppGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() io: Server;
   private readonly logger = new Logger(AppGateway.name);
 
   afterInit() {
-    this.logger.log("Initialized");
+    this.logger.log('Initialized');
   }
 
-  handleConnection(client: any, ...args: any[]) {
+  handleConnection(client: any) {
     const { sockets } = this.io.sockets;
 
     this.logger.log(`Client id: ${client.id} connected`);
@@ -39,12 +38,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     this.logger.log(`Cliend id:${client.id} disconnected`);
   }
 
-  sendMessage(data: any): void {
-    this.io.emit("event", { key: "some-key" });
-  }
-
-  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  sendMessage(data: { key: string; payload?: any }): void {
+    this.io.emit('event', data);
   }
 }
