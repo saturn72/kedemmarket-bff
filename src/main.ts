@@ -11,6 +11,9 @@ import { Logger } from '@nestjs/common';
 import fastifySocketIO from 'fastify-socket.io';
 import { AppGateway } from './core/gateways/app.gateway';
 import { getOrigin } from './utils';
+import * as dotenv from 'dotenv';
+
+dotenv.config({});  // Load environment variables from .env file 
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });

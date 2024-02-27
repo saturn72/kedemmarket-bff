@@ -8,6 +8,8 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { getOrigin } from '../../utils';
+import * as dotenv from 'dotenv';
+dotenv.config();  // Load environment variables from .env file 
 
 const wsoptions = {
   cors: {
@@ -19,8 +21,7 @@ const wsoptions = {
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 @WebSocketGateway(port, wsoptions)
 export class AppGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() io: Server;
   private readonly logger = new Logger(AppGateway.name);
 
