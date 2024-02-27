@@ -18,11 +18,10 @@ const wsoptions = {
   path: '/notify',
 };
 
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const port = process.env.WS_PORT ? parseInt(process.env.WS_PORT) : 3300;
 @WebSocketGateway(port, wsoptions)
 export class AppGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() io: Server;
   private readonly logger = new Logger(AppGateway.name);
 
