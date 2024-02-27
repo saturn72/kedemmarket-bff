@@ -16,7 +16,8 @@ const wsoptions = {
   path: '/notify',
 };
 
-@WebSocketGateway(wsoptions)
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+@WebSocketGateway(port, wsoptions)
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
