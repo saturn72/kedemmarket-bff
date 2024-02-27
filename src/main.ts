@@ -11,7 +11,6 @@ import { Logger } from '@nestjs/common';
 import fastifySocketIO from "fastify-socket.io";
 import { AppGateway } from './core/gateways/app.gateway';
 import { getOrigin } from './utils';
-//import { SocketIoAdapter } from './core/adapters/socketio.adapter';
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });
@@ -43,7 +42,6 @@ fastify.register(fastifySocketIO, o);
 
 async function bootstrap() {
   app = await NestFactory.create<NestFastifyApplication>(AppModule, fastify);
-  //  app.useWebSocketAdapter(new SocketIoAdapter(app));
 
   const appCheckGuard = app.get(AppCheckGuard);
   app.useGlobalGuards(appCheckGuard);
@@ -61,4 +59,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
