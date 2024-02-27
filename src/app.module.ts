@@ -9,6 +9,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { SseCacheExclusionHttpInterceptor } from './core/interceptors/CacheExclusionHttpInterceptor';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { HooksModule } from './hooks/hooks.module';
+import { AppGateway } from './core/gateways/app.gateway';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { HooksModule } from './hooks/hooks.module';
       provide: APP_INTERCEPTOR,
       useClass: SseCacheExclusionHttpInterceptor,
     },
+    AppGateway,
   ],
 })
 export class AppModule {}

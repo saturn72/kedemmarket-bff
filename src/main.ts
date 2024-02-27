@@ -9,6 +9,9 @@ import { RawServerDefault } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
+import fastifySocketIO from "fastify-socket.io";
+import { AppGateway } from './core/gateways/app.gateway';
+//import { SocketIoAdapter } from './core/adapters/socketio.adapter';
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });
@@ -37,6 +40,8 @@ fastify.register(fastifyCors, () => {
   };
 });
 
+fastify.register(fastifySocketIO, { cors: "*", path: '/notify' });
+
 async function bootstrap() {
   app = await NestFactory.create<NestFastifyApplication>(AppModule, fastify);
 
@@ -48,7 +53,12 @@ async function bootstrap() {
   const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
   console.log('KEDEMMARKET-BFF application starts on port:', port);
 
+  //  app.useWebSocketAdapter(new SocketIoAdapter(app));
   await app.listen(port);
+  console.log("application started")
+
+  const ag = app.get(AppGateway);
+  setInterval(() => ag.sendMessage({ key: "catalog:updated" }), 1000);
 }
 
 bootstrap();

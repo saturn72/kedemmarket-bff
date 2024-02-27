@@ -2,8 +2,8 @@ import { Global, Module } from '@nestjs/common';
 import { FirebaseService } from './firebase/firebase.service';
 import { AppCheckGuard } from './guards/app-check.guard';
 import { HttpModule } from '@nestjs/axios';
-import { AppGateway } from './app.gateway';
 import { EmitService } from './services/emit.service';
+import { AppGateway } from './gateways/app.gateway';
 
 @Global()
 @Module({
@@ -11,4 +11,4 @@ import { EmitService } from './services/emit.service';
   imports: [HttpModule],
   exports: [AppCheckGuard, EmitService, FirebaseService],
 })
-export class CoreModule {}
+export class CoreModule { }
