@@ -6,44 +6,44 @@ import {
 import fastifyCors from '@fastify/cors';
 import { AppModule } from './app.module';
 import { RawServerDefault } from 'fastify';
-import { ConfigService } from '@nestjs/config';
 import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
 import fastifySocketIO from "fastify-socket.io";
 import { AppGateway } from './core/gateways/app.gateway';
+import { getOrigin } from './utils';
 //import { SocketIoAdapter } from './core/adapters/socketio.adapter';
 
 let app: NestFastifyApplication<RawServerDefault>;
 const fastify = new FastifyAdapter({ caseSensitive: false });
-let allowedOrigins: string[];
 
 fastify.register(fastifyCors, () => {
   const logger = new Logger('fastify/cors');
+  const allowedOrigins = getOrigin();
+  logger.log('Allowed origins: ', allowedOrigins);
   return (req, callback) => {
-    if (
-      !allowedOrigins ||
-      allowedOrigins == null ||
-      allowedOrigins.length == 0
-    ) {
-      allowedOrigins = app
-        .get(ConfigService)
-        .get<Array<string>>('cors.origins');
-      logger.log('Allowed origins: ', allowedOrigins);
-    }
 
     const corsOptions: { origin: boolean } = { origin: false };
+    const origin: string = req.headers.origin;
 
-    if (allowedOrigins.some((o: string) => req.headers.origin.startsWith(o))) {
+    if (origin && allowedOrigins.some((o: string) => origin.startsWith(o))) {
       corsOptions.origin = true;
     }
     callback(null, corsOptions);
   };
 });
 
-fastify.register(fastifySocketIO, { cors: "*", path: '/notify' });
+
+const o = {
+  cors: { origin: getOrigin() }, path: '/notify'
+};
+
+console.log(`socketio start with options: ${JSON.stringify(o)}`);
+
+fastify.register(fastifySocketIO, o);
 
 async function bootstrap() {
   app = await NestFactory.create<NestFastifyApplication>(AppModule, fastify);
+  //  app.useWebSocketAdapter(new SocketIoAdapter(app));
 
   const appCheckGuard = app.get(AppCheckGuard);
   app.useGlobalGuards(appCheckGuard);
@@ -53,7 +53,6 @@ async function bootstrap() {
   const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
   console.log('KEDEMMARKET-BFF application starts on port:', port);
 
-  //  app.useWebSocketAdapter(new SocketIoAdapter(app));
   await app.listen(port);
   console.log("application started")
 
@@ -62,3 +61,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+

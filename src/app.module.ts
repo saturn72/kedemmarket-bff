@@ -20,6 +20,7 @@ import { AppGateway } from './core/gateways/app.gateway';
     ConfigModule.forRoot({
       load: [corsConfig, firebaseConfig],
       isGlobal: true,
+      ignoreEnvFile: false,
     }),
     CoreModule,
     EventEmitterModule.forRoot(),
@@ -33,4 +34,4 @@ import { AppGateway } from './core/gateways/app.gateway';
     AppGateway,
   ],
 })
-export class AppModule {}
+export class AppModule { }
