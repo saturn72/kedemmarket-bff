@@ -11,17 +11,20 @@ import { getOrigin } from '../../utils';
 import * as dotenv from 'dotenv';
 dotenv.config(); // Load environment variables from .env file
 
+const getPort = (): number =>
+  process.env.WS_PORT ? parseInt(process.env.WS_PORT) : 0;
+
 const wsoptions = {
   cors: {
     origins: getOrigin(),
   },
-  path: '/notify',
+  path: '/notify/',
 };
-
-const port = process.env.WS_PORT ? parseInt(process.env.WS_PORT) : 3300;
+const port = getPort();
 @WebSocketGateway(port, wsoptions)
 export class AppGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() io: Server;
   private readonly logger = new Logger(AppGateway.name);
 
@@ -41,6 +44,6 @@ export class AppGateway
   }
 
   sendMessage(data: { key: string; payload?: any }): void {
-    this.io.emit('event', data);
+    this.io.emit(data.key, data);
   }
 }

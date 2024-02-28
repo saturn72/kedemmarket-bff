@@ -35,7 +35,7 @@ fastify.register(fastifyCors, () => {
 
 const o = {
   cors: { origin: getOrigin() },
-  path: '/notify',
+  path: '/notify/',
 };
 
 console.log(`socketio start with options: ${JSON.stringify(o)}`);
