@@ -10,7 +10,7 @@ import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
 import fastifySocketIO from 'fastify-socket.io';
 import { AppGateway } from './core/gateways/app.gateway';
-import { getOrigin } from './utils';
+import { getOrigin, getSocketIOServerOptions } from './utils';
 import * as dotenv from 'dotenv';
 
 dotenv.config({}); // Load environment variables from .env file
@@ -33,14 +33,11 @@ fastify.register(fastifyCors, () => {
   };
 });
 
-const o = {
-  cors: { origin: getOrigin() },
-  path: '/notify/',
-};
 
-console.log(`socketio start with options: ${JSON.stringify(o)}`);
+const { options } = getSocketIOServerOptions();
+console.log(`socketio start with options: ${JSON.stringify(options)}`);
 
-fastify.register(fastifySocketIO, o);
+fastify.register(fastifySocketIO, options);
 
 async function bootstrap() {
   app = await NestFactory.create<NestFastifyApplication>(AppModule, fastify);
