@@ -12,7 +12,8 @@ import { getSocketIOServerOptions } from 'src/utils';
 const { port, options } = getSocketIOServerOptions();
 @WebSocketGateway(port, options)
 export class AppGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() io: Server;
   private readonly logger = new Logger(AppGateway.name);
 

@@ -5,7 +5,7 @@ export function getOrigin(): string[] {
   return process.env.CORS_ORIGIN?.split(',').map((c) => c.trim());
 }
 
-export function getSocketIOServerOptions(): { port: number, options: {} } {
+export function getSocketIOServerOptions(): { port: number; options: any } {
   const port = process.env.WS_PORT ? parseInt(process.env.WS_PORT) : 3300;
   const options = {
     cors: {

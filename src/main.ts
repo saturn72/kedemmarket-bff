@@ -33,7 +33,6 @@ fastify.register(fastifyCors, () => {
   };
 });
 
-
 const { options } = getSocketIOServerOptions();
 console.log(`socketio start with options: ${JSON.stringify(options)}`);
 
