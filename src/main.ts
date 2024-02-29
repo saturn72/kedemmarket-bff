@@ -9,7 +9,6 @@ import { RawServerDefault } from 'fastify';
 import { AppCheckGuard } from './core/guards/app-check.guard';
 import { Logger } from '@nestjs/common';
 import fastifySocketIO from 'fastify-socket.io';
-import { AppGateway } from './core/gateways/app.gateway';
 import { getOrigin, getSocketIOServerOptions } from './utils';
 import * as dotenv from 'dotenv';
 
