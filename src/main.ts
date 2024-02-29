@@ -51,9 +51,6 @@ async function bootstrap() {
 
   await app.listen(port);
   console.log('application started');
-
-  const ag = app.get(AppGateway);
-  setInterval(() => ag.sendMessage({ key: 'catalog:updated' }), 1000);
 }
 
 bootstrap();
